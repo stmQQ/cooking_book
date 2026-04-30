@@ -12,4 +12,27 @@ class User(Base):
     followers = relationship(
         'User', 
         secondary='followers',
-        primaryjoin=(User.id == followers.))
+        primaryjoin=(User.id == followers_table.c.followed_id),
+        secondaryjoin=(User.id == followers_table.c.follower_id),
+        back_populates='following',
+        lazy='dynamic')
+
+    following = relationship(
+        'User', 
+        secondary='followers',
+        primaryjoin=(User.id == followers_table.c.follower_id),
+        secondaryjoin=(User.id == followers_table.c.followed_id),
+        back_populates='followers',
+        lazy='dynamic')
+
+    favorite_dishes = relationship(
+        'Dish',
+        secondary='favorite_dishes',
+        back_populates='users',
+        lazy='dynamic'
+    )
+
+    authored_dishes = relationship(
+        'Dish',
+        back_populates='author', lazy='dynamic'
+    )

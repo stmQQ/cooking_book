@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey, DateTime
+from sqlalchemy import Table, Column, Integer, ForeignKey, DateTime
 from app.core.database import Base
 
 followers_table = Table(
