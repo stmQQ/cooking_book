@@ -11,4 +11,4 @@ class Kitchen(Base):
     background_url = Column(String)
     
     dishes = relationship('Dish', back_populates='kitchen', lazy='dynamic')
-    popular_products = relationship('Product', secondary='favorite_products', back_populates='kitchen')
+    popular_products = relationship('Product', secondary=popular_products_table, back_populates='kitchen')

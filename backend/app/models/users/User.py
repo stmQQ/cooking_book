@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 from app.models.helpers.followers import followers_table
+from app.models.helpers.favorite_dishes import favorite_dishes_table
 
 class User(Base):
     __tablename__ = 'users'
@@ -11,23 +12,23 @@ class User(Base):
 
     followers = relationship(
         'User', 
-        secondary='followers',
-        primaryjoin=(User.id == followers_table.c.followed_id),
-        secondaryjoin=(User.id == followers_table.c.follower_id),
+        secondary=followers_table,
+        primaryjoin=(id == followers_table.c.followed_id),
+        secondaryjoin=(id == followers_table.c.follower_id),
         back_populates='following',
         lazy='dynamic')
 
     following = relationship(
         'User', 
-        secondary='followers',
-        primaryjoin=(User.id == followers_table.c.follower_id),
-        secondaryjoin=(User.id == followers_table.c.followed_id),
+        secondary=followers_table,
+        primaryjoin=(id == followers_table.c.follower_id),
+        secondaryjoin=(id == followers_table.c.followed_id),
         back_populates='followers',
         lazy='dynamic')
 
     favorite_dishes = relationship(
         'Dish',
-        secondary='favorite_dishes',
+        secondary=favorite_dishes_table,
         back_populates='users',
         lazy='dynamic'
     )

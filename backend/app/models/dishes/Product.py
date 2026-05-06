@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, Float, String
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 from app.models.helpers.dish_products import dish_products_table
+from app.models.helpers.popular_products import popular_products_table
 
 
 class Product(Base):
@@ -17,6 +18,6 @@ class Product(Base):
     sugar = Column(Float, nullable=False)
     fiber = Column(Float, nullable=False)
     
-    dishes = relationship('Dish', secondary='dish_products', back_populates='products', lazy='dynamic')
-    kitchens = relationship('Kitchen', secondary='popular_products', back_populates='common_products')
-    tags = relationship('Tag', secondary='product_tags', back_populates='products', lazy='dynamic')
+    dishes = relationship('Dish', secondary=dish_products_table, back_populates='products', lazy='dynamic')
+    kitchens = relationship('Kitchen', secondary=popular_products_table, back_populates='common_products')
+
